@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
-<!--HOLA--> <!--EJEMPLO-->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -28,7 +28,7 @@
     <!-- modernizr css -->
     <script src="../plantilla1/srtdash/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-
+<!--COMENTARIO DE PRUEBA>
 <body>
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -37,7 +37,7 @@
     <div id="preloader">
         <div class="loader"></div>
     </div>
-    <!-- preloader area end -->
+    <!-- preloAader area end -->
     <!-- page container area start -->
     <div class="page-container">
         <!-- sidebar menu area start -->
@@ -148,27 +148,28 @@
                                 </div>
                                 <hr>
                                 <!--<div class="row">
-                                    <p>____________sssssssa________y________________________________________________________________________________________________________________________________________________________</p>
+                                    <p>____________________________________________________________________________________________________________________________________________________________________________</p>
                                 </div>-->
-                                <!-- DATA TABLE -->
+                                <!--DATA TABLE-->
                                 <div class="data-tables mt-5">
                                     <table id="dataTable" class="text-center">
                                         <thead class="bg-light text-capitalize">
                                             <tr>
-                                                <th>Nombre de la actividad</th>
+                                                <!--<th>Nombre de la actividad</th>-->
+                                                <th>Nombre</th>
                                                 <th>Fecha</th>
                                                 <th>Horas</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <!--<tr>
                                                 <td align="left">Curso de Android</td>
                                                 <td>23-12-2020</td>
                                                 <td>20</td>
                                                 <td align="left">
                                                     <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar"><i class="ti-pencil"></i> Editar </button>
-                                                    <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#exampleModalCenter"><i class="ti-trash"></i> Eliminar </button>
+                                                    <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar"><i class="ti-trash"></i> Eliminar </button>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -177,7 +178,7 @@
                                                 <td>20</td>
                                                 <td align="left">
                                                     <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar"><i class="ti-pencil"></i> Editar </button>
-                                                    <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#exampleModalCenter"><i class="ti-trash"></i> Eliminar </button>
+                                                    <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar"><i class="ti-trash"></i> Eliminar </button>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -197,7 +198,7 @@
                                                         Rechazada
                                                     </a>
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -209,7 +210,7 @@
         </div>
 
         <!-- inicia modal para eliminar -->
-        <div class="modal fade" id="exampleModalCenter">
+        <div class="modal fade" id="modalEliminar">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -241,7 +242,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-form-label">Nombre de la actividad</label>
-                                    <input class="form-control" type="text" value="Digite nombre de la actividad" id="example-text-input">
+                                    <input class="form-control" type="text" placeholder="Digite nombre de la actividad" id="nombre_act">
                                 </div>
                             </div>
                         </div>
@@ -249,13 +250,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-form-label">Fecha de inicio</label>
-                                    <input class="form-control" type="date" value="" id="example-text-input">
+                                    <input class="form-control" type="date" placeholder="" id="fecha_inicio">
                                 </div>
                             </div>
                             <div class="col-6" rowspan="3">
                                 <div class="form-group">
                                     <label for="example-date-input" class="col-form-label">Fecha de termino</label>
-                                    <input class="form-control" type="date" value="" id="example-date-input">
+                                    <input class="form-control" type="date" placeholder="" id="fecha_termino">
                                 </div>
                             </div>
                         </div>
@@ -263,7 +264,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-form-label">Horas</label>
-                                    <input class="form-control" type="number" value="Digite nombre de la actividad" id="example-text-input">
+                                    <input class="form-control" type="number" placeholder="Digite las horas" id="horas">
                                 </div>
                             </div>
                         </div>
@@ -272,8 +273,12 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-form-label">Archivo(solo un constancia y en .pdf)</label>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
-                                            <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                                            <input type="file" class="custom-file-input" id="archivo">
+                                            <label class="custom-file-label" for="archivo" id="archivo_nombre">Choose file</label>
+                                            <!--document.getElementById('image1').onchange = function () {
+                                            console.log(this.value);
+                                            document.getElementById('fichero').innerHTML = document.getElementById('image1').files[0].name;
+                                            }-->
                                         </div>
                                 </div>
                             </div>
@@ -283,7 +288,7 @@
                                 <div class="form-group">
                                 <div class="form-group">
                                     <label>Observaciones</label>
-                                    <textarea class="form-control" rows="5" placeholder="Ingrese las observaciones que considere necesarias"></textarea>
+                                    <textarea class="form-control" rows="5" id="observaciones" placeholder="Ingrese las observaciones que considere necesarias"></textarea>
                                 </div>
                                 </div>
                             </div>
@@ -291,7 +296,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-success" onclick="actionCreate();">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -312,7 +317,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-form-label">Nombre de la actividad</label>
-                                    <input class="form-control" type="text" value="Club de robotica" id="example-text-input">
+                                    <input class="form-control" type="text" value="Club de robotica" id="nombre_act_edi">
                                 </div>
                             </div>
                         </div>
@@ -320,14 +325,14 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-form-label">Fecha de inicio</label>
-                                    <input class="form-control" type="date" value="2018-01-30" id="example-text-input" data-mask>
+                                    <input class="form-control" type="date" value="2018-01-30" id="fecha_inicio_edi" data-mask>
                                     <!--value="2018-01-30" -->
                                 </div>
                             </div>
                             <div class="col-6" rowspan="3">
                                 <div class="form-group">
                                     <label for="example-date-input" class="col-form-label">Fecha de termino</label>
-                                    <input class="form-control" type="date" value="2020-05-05" id="example-date-input">
+                                    <input class="form-control" type="date" value="2020-05-05" id="fecha_termino_edi">
                                 </div>
                             </div>
                         </div>
@@ -335,7 +340,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-form-label">Horas</label>
-                                    <input class="form-control" type="number" value="16" id="example-text-input">
+                                    <input class="form-control" type="number" value="16" id="horas_edi">
                                 </div>
                             </div>
                         </div>
@@ -355,7 +360,7 @@
                                 <div class="form-group">
                                 <div class="form-group">
                                     <label>Observaciones</label>
-                                    <textarea class="form-control" rows="5" placeholder="Observaciones..."></textarea>
+                                    <textarea class="form-control" rows="5" placeholder="Observaciones..." id="observaciones_edi"></textarea>
                                 </div>
                                 </div>
                             </div>
@@ -579,6 +584,20 @@
     <!-- others plugins -->
     <script src="../plantilla1/srtdash/assets/js/plugins.js"></script>
     <script src="../plantilla1/srtdash/assets/js/scripts.js"></script>
+
+
+    <!-- Page specific script -->
+    <script src="js/alta_constancias.js"></script>
+
+   <script>
+        $(function () {
+            $(document).ready(function(){
+            actionRead();
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>
