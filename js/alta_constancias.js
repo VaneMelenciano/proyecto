@@ -1,3 +1,16 @@
+function limpiarModalNuevo(){
+    var nombre_act_create = document.getElementById("nombre_act");
+    var fecha_inicio_create = document.getElementById("fecha_inicio");
+    var fecha_termino_create = document.getElementById("fecha_termino");//1982-01-31
+    var horas_create = document.getElementById("horas"); 
+    var observaciones_create = document.getElementById("observaciones");
+    nombre_act_create.value="";
+    fecha_inicio_create.value="";
+    fecha_termino_create.value="";
+    horas_create.value="";
+    observaciones_create.value="";
+}
+
 function actionCreate(){
     
     var tabla = $('#dataTable').DataTable();
@@ -41,6 +54,7 @@ function actionCreate(){
           }
         }
       });
+    limpiarModalNuevo();
 }
 function actionRead(){
     $.ajax({
