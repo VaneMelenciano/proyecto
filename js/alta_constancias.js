@@ -74,7 +74,7 @@ function actionRead(){
                 for(constancia of objetoJSON.constancias){
                 
                     var Botones = '<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar"><i class="ti-pencil"></i> Editar </button>';
-                    Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+denominacion.id+');"><i class="ti-trash"></i> Eliminar </button>';
+                    Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+constancia.id+');"><i class="ti-trash"></i> Eliminar </button>';
                     
                     tabla.row.add([
                         constancia.nombre_act,
@@ -97,7 +97,7 @@ function actionUpdate(){
 }
 function actionDelete(){
     $.ajax({
-        url: "../php/alta_constancias.php",
+        url: "php/alta_constancias.php",
         type: 'POST',
         data: {
           id: idSeleccionadoParaEliminar,
