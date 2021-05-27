@@ -40,7 +40,7 @@ function actionCreate(){
             //mostar en la tabla los datos que este regresando
                 //BOTONES
                 var Botones = '<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar"><i class="ti-pencil"></i> Editar </button>';
-                Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar"><i class="ti-trash"></i> Eliminar </button>';
+                Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button>';
                 
                 tabla.row.add( [
                     nombre_act_create,
@@ -74,7 +74,7 @@ function actionRead(){
                 for(constancia of objetoJSON.constancias){
                 
                     var Botones = '<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar"><i class="ti-pencil"></i> Editar </button>';
-                    Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar"><i class="ti-trash"></i> Eliminar </button>';
+                    Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+denominacion.id+');"><i class="ti-trash"></i> Eliminar </button>';
                     
                     tabla.row.add([
                         constancia.nombre_act,
@@ -96,6 +96,31 @@ function actionUpdate(){
 
 }
 function actionDelete(){
-    alert("Eliminar");
-
+    $.ajax({
+        url: "../php/alta_constancias.php",
+        type: 'POST',
+        data: {
+          id: idSeleccionadoParaEliminar,
+          accion: 'delete'
+        },
+      success: function(resultado){
+        var objetoJSON = JSON.parse(resultado);
+        if(objetoJSON.estado==1){
+          //Quitar el registro eliminado
+          var tabla = $('#dataTable').DataTable();
+          tabla.row("#row_"+idSeleccionadoParaEliminar).remove().draw();
+    
+          alert(objetoJSON.mensaje);
+          $('#modalEliminar').modal('hide');
+        }
+        else{
+          alert(objetoJSON.mensaje);
+        }
+      }
+      });
 }
+
+function identificaEliminar(id){
+    //alert("El id del registro a eliminar es "+id);
+    idSeleccionadoParaEliminar=id;
+  }

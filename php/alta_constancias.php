@@ -125,8 +125,25 @@
     }
 
     function accionEliminar($conexion){
+      //ELIMINAR
+      $respuesta = array();
       $id = $_POST['id'];
 
+      $Query = "DELETE FROM constancias WHERE constancias.id = ".$id;
+      mysqli_query($conexion,$Query);
+  
+      $constanciasEliminadas = mysqli_affected_rows($conexion);
+
+      if($constanciasEliminadas>=1){
+      $respuesta['estado'] = 1;
+      $respuesta['mensaje'] = "La constancia se eliminó con exito";
+      }
+      else{
+      $respuesta['estado'] = 0;
+      $respuesta['mensaje'] = mysqli_error($conexion);
+      }
+      echo json_encode($respuesta);
+      mysqli_close($conexion);
     }
 
 ?>
