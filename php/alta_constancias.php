@@ -18,7 +18,7 @@
       case 'delete':
         accionEliminar($conexion);
         break;
-      case 'Read':
+      case 'read':
         accionLeer($conexion);
         break;
       case 'Actualizar':
@@ -76,14 +76,28 @@
       if(isset($_GET['id'])){
         //quiero un solo registro
         $id = $_GET['id'];
+        $Query ="SELECT * FROM constancias WHERE id = ".$id."";
+        $resultado = mysqli_query($conexion,$Query);
+        $numero = mysqli_num_rows($resultado);
+        if($numero==1){
+          $row = mysqli_fetch_array($resultado);
+
+          $respuesta["id"] = $row["id"];
+          $respuesta["nombre_act"] = $row["nombre_act"];
+          $respuesta["fecha_inicio"] = $row["fecha_inicio"];
+          $respuesta["fecha_termino"] = $row["fecha_termino"];
+          $respuesta["horas"] = $row["horas"];
+          $respuesta["observaciones"] = $row["observaciones"];
+          $respuesta["estado"]=1;
+          $respuesta["mensaje"]= "Si hay registro para mostrar";
+        }else{
+            $respuesta["estado"]=0;
+            $respuesta["mensaje"]= "Ocurrió un error desconocido";
+        }
       }else{
         //Quiero todos los registros
         $Query ="SELECT * FROM constancias";
         $resultado = mysqli_query($conexion,$Query); //Contiene 
-        //print_r($resultado);
-        //Ciclo para recorrer los rows
-        //$numero = mysql_num_rows($resultado);
-        //$numero = mysql_fetch_assoc($resultado);
         $numero = 1;
         //Cuantos registros me regreso
           if( $numero>=1){
