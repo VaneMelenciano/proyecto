@@ -42,7 +42,7 @@ function actionCreate(){
                 tabla.row.add( [
                     nombre_act_create,
                     fecha_inicio_create,
-                    horas,
+                    horas_create,
                     Botones
                 ] ).draw( false );
                 alert(objetoJSON.mensaje);
