@@ -7,6 +7,7 @@ function limpiarModalNuevo(){
   document.getElementById("fecha_termino").value="";//1982-01-31
   document.getElementById("horas").value=""; 
   document.getElementById("observaciones").value="";
+  document.getElementById('archivo_nombre').innerHTML="Seleccionar archivo";
 }
 
 function actionCreate(){
@@ -149,4 +150,8 @@ function identificaEliminar(id){
 function identificarActualizar(id){
     //alert("El registro seleccionado actualizar es el siguiete: "+id);
     idSeleccionadoParaActualizar=id;
+}
+document.getElementById('archivo').onchange = function () {
+  console.log(this.value);
+  document.getElementById('archivo_nombre').innerHTML = document.getElementById('archivo').files[0].name;
 }
