@@ -18,6 +18,8 @@ function actionCreate(){
     var fecha_termino_create = document.getElementById("fecha_termino").value;//1982-01-31
     var horas_create = document.getElementById("horas").value; 
     var observaciones_create = document.getElementById("observaciones").value;
+    var archivo_create = document.getElementById('archivo').value; //direccion actual
+    var archivo_nombre = document.getElementById('archivo_nombre').innerHTML;
     //Guardar en la base de datos
    $.ajax({
         url: "php/alta_constancias.php",
@@ -28,6 +30,8 @@ function actionCreate(){
             fecha_termino : fecha_termino_create,
             horas : horas_create,
             observaciones : observaciones_create,
+            archivo : archivo_create,
+            archivo_nombre: archivo_nombre, 
             accion: 'create'
         },
         success: function(resultado) {
@@ -136,6 +140,7 @@ function recuperarRegistroActualizar(id){
             document.getElementById("fecha_termino_actualizar").value= objetoJSON.fecha_termino;//1982-01-31
             document.getElementById("horas_actualizar").value=objetoJSON.horas; 
             document.getElementById("observaciones_actualizar").value=objetoJSON.observaciones;
+            document.getElementById("archivo_nombre_actualizar").innerHTML=objetoJSON.archivo_nombre;
           }else{
               alert(objetoJSON.mensaje);
           }
@@ -154,4 +159,9 @@ function identificarActualizar(id){
 document.getElementById('archivo').onchange = function () {
   console.log(this.value);
   document.getElementById('archivo_nombre').innerHTML = document.getElementById('archivo').files[0].name;
+}
+
+document.getElementById('archivo_actualizar').onchange = function () {
+  console.log(this.value);
+  document.getElementById('archivo_nombre_actualizar').innerHTML = document.getElementById('archivo_actualizar').files[0].name;
 }

@@ -30,28 +30,17 @@
 
     function accionCrear($conexion){
 
-      /*$servidor = "localhost";
-      $usuario  = "root";
-      $clave    = "";
-      $basedatos     = "electivaspf";
-
-      if (!($conexion = mysqli_connect($servidor, $usuario, $clave, $basedatos)))
-      {
-      echo "Error conectando a la base de datos.";
-      exit();
-      }
-      echo "Todo bien";*/
-
       $respuesta = array();
       $nombre_act    = $_POST['nombre_act'];
       $fecha_inicio  = $_POST['fecha_inicio'];
       $fecha_termino = $_POST['fecha_termino'];
       $horas         = $_POST['horas'];
       $observaciones = $_POST['observaciones'];
-      //$ejemplos      = $_POST['ejemplos'];
+      $archivo_nombre= $_POST['archivo_nombre'];
+      $destino = '../archivos/'. $archivo_nombre;
 
       //$Query = "INSERT INTO constancias (id, nombre_act, fecha_inicio, fecha_termino, horas, observaciones) VALUES (NULL, '".$nombre_act."', '".$fecha_inicio."', '".$fecha_termino."', ".$horas.", '".$observaciones."') ";
-      $Query = " INSERT INTO constancias (id, nombre_act, fecha_inicio, fecha_termino, horas, observaciones) VALUES (NULL, '$nombre_act', '$fecha_inicio', '$fecha_termino', '$horas', '$observaciones'); ";
+      $Query = " INSERT INTO constancias (id, nombre_act, fecha_inicio, fecha_termino, horas, observaciones, archivo_ruta, archivo_nombre) VALUES (NULL, '$nombre_act', '$fecha_inicio', '$fecha_termino', '$horas', '$observaciones', '$destino', '$archivo_nombre'); ";
       $resultado = mysqli_query($conexion,$Query);
 
       if($resultado>=1){
@@ -88,6 +77,8 @@
           $respuesta["fecha_termino"] = $row["fecha_termino"];
           $respuesta["horas"] = $row["horas"];
           $respuesta["observaciones"] = $row["observaciones"];
+          $respuesta["archivo_ruta"]=$row["archivo_ruta"];
+          $respuesta["archivo_nombre"]=$row["archivo_nombre"];
           $respuesta["estado"]=1;
           $respuesta["mensaje"]= "Si hay registro para mostrar";
         }else{
@@ -115,6 +106,8 @@
               $rowConstancia["fecha_termino"] = $row["fecha_termino"];
               $rowConstancia["horas"] = $row["horas"];
               $rowConstancia["observaciones"] = $row["observaciones"];
+              $rowConstancia["archivo_ruta"]=$row["archivo_ruta"];
+              $rowConstancia["archivo_nombre"]=$row["archivo_nombre"];
               //Ponereste objeto = $rowDenominacion poner en el arrelo denominaciones
               array_push($respuesta["constancias"], $rowConstancia);
             
@@ -136,6 +129,8 @@
       $fecha_termino = $_POST['fecha_termino'];
       $horas         = $_POST['horas'];
       $observaciones = $_POST['observaciones'];
+      $archivo_ruta  = $_POST['archivo_ruta'];
+      $archivo_nombre= $_POST['archivo_nombre'];
     }
 
     function accionEliminar($conexion){
