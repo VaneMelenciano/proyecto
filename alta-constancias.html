@@ -294,7 +294,7 @@
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="limpiarModalNuevo()">Cancelar</button>
                             <!--<button type="button" class="btn btn-success" data-dismiss="modal" onclick="actionCreate();">Guardar</button>-->
-                            <input type="submit" onclick="actionCreate();" class="btn btn-primary"/>
+                            <input type="submit" onclick="actionCreate();" class="btn btn-success" value="Guardar" />
                         </div>
                     </form>
                 </div>
@@ -312,63 +312,66 @@
                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Nombre de la actividad</label>
-                                    <input class="form-control" type="text" id="nombre_act_actualizar">
+                        <form enctype="multipart/form-data" action="php/upload1.php" method="POST" id="form">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-form-label">Nombre de la actividad</label>
+                                        <input class="form-control" type="text" id="nombre_act_actualizar">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-form-label">Fecha de inicio</label>
+                                        <input class="form-control" type="date" id="fecha_inicio_actualizar" data-mask>
+                                        <!--value="2018-01-30" -->
+                                    </div>
+                                </div>
+                                <div class="col-6" rowspan="3">
+                                    <div class="form-group">
+                                        <label for="example-date-input" class="col-form-label">Fecha de termino</label>
+                                        <input class="form-control" type="date" id="fecha_termino_actualizar">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-form-label">Horas</label>
+                                        <input class="form-control" type="number" id="horas_actualizar">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-form-label">Archivo(solo un constancia y en .pdf)</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="archivo_actualizar" name="archivo_actualizar" accept="application/pdf">
+                                                <label class="custom-file-label" for="archivo_actualizar" id="archivo_nombre_actualizar">Seleccionar archivo</label> 
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Observaciones</label>
+                                        <textarea class="form-control" rows="5" placeholder="Observaciones..." id="observaciones_actualizar"></textarea>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Fecha de inicio</label>
-                                    <input class="form-control" type="date" id="fecha_inicio_actualizar" data-mask>
-                                    <!--value="2018-01-30" -->
-                                </div>
-                            </div>
-                            <div class="col-6" rowspan="3">
-                                <div class="form-group">
-                                    <label for="example-date-input" class="col-form-label">Fecha de termino</label>
-                                    <input class="form-control" type="date" id="fecha_termino_actualizar">
-                                </div>
-                            </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <!--<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actionUpdate();">Actualizar</button>-->
+                            <input type="submit" onclick="actionUpdate();" class="btn btn-primary" value="Actualizar"/>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Horas</label>
-                                    <input class="form-control" type="number" id="horas_actualizar">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Archivo(solo un constancia y en .pdf)</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="archivo_actualizar" name="archivo_actualizar" accept="application/pdf">
-                                            <label class="custom-file-label" for="archivo_actualizar" id="archivo_nombre_actualizar">Seleccionar archivo</label> 
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                <div class="form-group">
-                                    <label>Observaciones</label>
-                                    <textarea class="form-control" rows="5" placeholder="Observaciones..." id="observaciones_actualizar"></textarea>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actionUpdate();">Actualizar</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

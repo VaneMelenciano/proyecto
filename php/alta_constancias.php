@@ -128,6 +128,19 @@
       $observaciones = $_POST['observaciones'];
       $archivo_ruta  = $_POST['archivo_ruta'];
       $archivo_nombre= $_POST['archivo_nombre'];
+      //ACTUALIZAR ARCHIVO
+      $Query ="SELECT * FROM constancias WHERE id = ".$id."";
+      $resultado = mysqli_query($conexion,$Query);
+      $consulta= mysqli_fetch_array($resultado);
+      $ruta=$consulta["archivo_ruta"];
+      $nombre =$consulta["archivo_nombre"];
+      /*if($nombre==$nombre_act){//si el pdf editado es igual al actual
+        unlink($ruta); //borramos el guardado
+      }*/
+      if(file_exists($ruta)){ //si el archivo exite lo elimina
+        unlink($ruta);
+      }
+
 
       $Query = "UPDATE constancias SET nombre_act = '$nombre_act', fecha_inicio ='$fecha_inicio', fecha_termino ='$fecha_termino', horas='$horas', observaciones ='$observaciones', archivo_ruta = '$archivo_ruta', archivo_nombre = '$archivo_nombre' WHERE id = ".$id;
       $resultado = mysqli_query($conexion, $Query);
