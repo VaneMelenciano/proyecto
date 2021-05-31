@@ -49,7 +49,8 @@ function actionCreate(){
                     fecha_inicio_create,
                     horas_create,
                     Botones
-                ] ).draw( false );
+                ] ).node().id = 'row_'+objetoJSON.id;
+                    tabla.draw(false);
                 //alert(objetoJSON.mensaje);
           }else{
               //alert(objetoJSON.mensaje);
@@ -84,7 +85,6 @@ function actionRead(){
                         constancia.horas,
                         Botones
                     ]).node().id = 'row_'+constancia.id;
-
                     tabla.draw(false);
                 }
             }
@@ -93,10 +93,39 @@ function actionRead(){
     
       });
 }
-function actionUpdate(){
-    alert("Actualizar");
 
+function actionUpdate(){
+  var tabla = $('#dataTable').DataTable();
+  var nombre_act_actualizar = document.getElementById("nombre_act_actualizar").value;
+  var fecha_inicio_actualizar = document.getElementById("fecha_inicio_actualizar").value;
+  var fecha_termino_actualizar = document.getElementById("fecha_termino_actualizar").value;//1982-01-31
+  var horas_actualizar = document.getElementById("horas_actualizar").value; 
+  var archivo_actualizar = document.getElementById('archivo_actualizar').value; //direccion actual
+  var archivo_nombre_actualizar = document.getElementById('archivo_nombre_actualizar').innerHTML;
+  var observaciones_actualizar = document.getElementById("observaciones_actualizar").value;
+  
+  $.ajax({
+      url: "php/alta_constancias.php",
+      method: 'POST',
+      data: {
+          id: idSeleccionadoParaActualizar,
+          nombre_act: nombre_act_actualizar,
+          fecha_inicio: fecha_inicio_actualizar,
+          fecha_termino: fecha_termino_actualizar,
+          horas: horas_actualizar,
+          observaciones: observaciones_actualizar,
+          archivo_ruta: archivo_actualizar,
+          archivo_nombre: archivo_nombre_actualizar,
+          accion: 'Actualizar'
+      },
+      success: function( respuesta ) {
+          //alert(respuesta);
+          tabla.row("#row_"+idSeleccionadoParaActualizar).remove().draw();
+          actualizarRegistro();
+      }
+    });
 }
+
 function actionDelete(){
     $.ajax({
         url: "php/alta_constancias.php",
@@ -148,6 +177,36 @@ function recuperarRegistroActualizar(id){
       }
     });
 }
+
+function actualizarRegistro(){ //Función hija de actionUpdate. Se encarga de volver a agregar el renglón actualizado.
+  $.ajax({
+      url: "php/alta_constancias.php",
+      method: 'GET',
+      data: {
+          id: idSeleccionadoParaActualizar,
+          accion: 'read'
+      },
+      success: function( resultado ) {
+          var objetoJSON = JSON.parse(resultado);
+          var tabla = $('#dataTable').DataTable();
+          if(objetoJSON.estado==1){
+            var Botones = '<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
+            Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button>';
+            
+            tabla.row.add( [
+                objetoJSON.nombre_act,
+                objetoJSON.fecha_inicio,
+                objetoJSON.horas,
+                Botones
+            ] ).node().id = 'row_'+objetoJSON.id;
+            tabla.draw(false);
+          }else{
+              alert(objetoJSON.mensaje);
+          }
+      }
+    });
+}
+
 function identificaEliminar(id){
     //alert("El id del registro a eliminar es "+id);
     idSeleccionadoParaEliminar=id;

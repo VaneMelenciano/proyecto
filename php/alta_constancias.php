@@ -118,6 +118,7 @@
         //codificar para eliminar un registro
         echo json_encode($respuesta);
     }
+    
     function accionActualizar($conexion){
       $id = $_POST['id'];
       $nombre_act    = $_POST['nombre_act'];
@@ -127,6 +128,20 @@
       $observaciones = $_POST['observaciones'];
       $archivo_ruta  = $_POST['archivo_ruta'];
       $archivo_nombre= $_POST['archivo_nombre'];
+
+      $Query = "UPDATE constancias SET nombre_act = '$nombre_act', fecha_inicio ='$fecha_inicio', fecha_termino ='$fecha_termino', horas='$horas', observaciones ='$observaciones', archivo_ruta = '$archivo_ruta', archivo_nombre = '$archivo_nombre' WHERE id = ".$id;
+      $resultado = mysqli_query($conexion, $Query);
+      $numero = mysqli_affected_rows($conexion);
+
+      if($numero >= 1){
+          $respuesta["estado"] = 1;
+          $respuesta["mensaje"] = "El registro se actualizo correctamente";
+      }
+      else{
+          $respuesta["estado"] = 0;
+          $respuesta["mensaje"] = "El registro no se ha podido actualizar";
+      }
+      echo($Query);
     }
 
     function accionEliminar($conexion){
