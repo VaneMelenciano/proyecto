@@ -50,9 +50,9 @@ function actionCreate(){
                     horas_create,
                     Botones
                 ] ).draw( false );
-                alert(objetoJSON.mensaje);
+                //alert(objetoJSON.mensaje);
           }else{
-              alert(objetoJSON.mensaje);
+              //alert(objetoJSON.mensaje);
           }
         }
       });
@@ -112,18 +112,18 @@ function actionDelete(){
           var tabla = $('#dataTable').DataTable();
           tabla.row("#row_"+idSeleccionadoParaEliminar).remove().draw();
     
-          alert(objetoJSON.mensaje);
+          //alert(objetoJSON.mensaje);
           $('#modalEliminar').modal('hide');
         }
         else{
-          alert(objetoJSON.mensaje);
+          //alert(objetoJSON.mensaje);
         }
       }
       });
 }
 
 function recuperarRegistroActualizar(id){
-  alert(id);
+  //alert(id);
   idSeleccionadoParaActualizar=id;
   $.ajax({
       url: "php/alta_constancias.php",
@@ -142,9 +142,9 @@ function recuperarRegistroActualizar(id){
             document.getElementById("observaciones_actualizar").value=objetoJSON.observaciones;
             document.getElementById("archivo_nombre_actualizar").innerHTML=objetoJSON.archivo_nombre;
           }else{
-              alert(objetoJSON.mensaje);
+              //alert(objetoJSON.mensaje);
           }
-          alert(resultado);
+          //alert(resultado);
       }
     });
 }

@@ -39,7 +39,6 @@
       $archivo_nombre= $_POST['archivo_nombre'];
       $destino = '../archivos/'. $archivo_nombre;
 
-      //$Query = "INSERT INTO constancias (id, nombre_act, fecha_inicio, fecha_termino, horas, observaciones) VALUES (NULL, '".$nombre_act."', '".$fecha_inicio."', '".$fecha_termino."', ".$horas.", '".$observaciones."') ";
       $Query = " INSERT INTO constancias (id, nombre_act, fecha_inicio, fecha_termino, horas, observaciones, archivo_ruta, archivo_nombre) VALUES (NULL, '$nombre_act', '$fecha_inicio', '$fecha_termino', '$horas', '$observaciones', '$destino', '$archivo_nombre'); ";
       $resultado = mysqli_query($conexion,$Query);
 
@@ -55,7 +54,6 @@
         $respuesta['id'] = -1; //programador
         echo json_encode($respuesta);
       }
-      //echo "Tu query es: ".$Query;
       
     }
 
@@ -117,8 +115,6 @@
               $respuesta["mensaje"]= "Registros no encontrados";
           }
         }
-        
-
         //codificar para eliminar un registro
         echo json_encode($respuesta);
     }
@@ -138,6 +134,16 @@
       $respuesta = array();
       $id = $_POST['id'];
 
+      //RUTA DEL ARCHIVO
+      $Query ="SELECT archivo_ruta FROM constancias WHERE id = ".$id."";
+      $resultado = mysqli_query($conexion,$Query);
+      $consulta= mysqli_fetch_array($resultado);
+      $ruta=$consulta["archivo_ruta"];
+      $respuesta['ruta']=$ruta;
+      if(file_exists($ruta)){ //si el archivo exite lo elimina
+        unlink($ruta);
+      }
+      
       $Query = "DELETE FROM constancias WHERE constancias.id = ".$id;
       mysqli_query($conexion,$Query);
   
