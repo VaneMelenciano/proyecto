@@ -126,8 +126,8 @@
       $fecha_termino = $_POST['fecha_termino'];
       $horas         = $_POST['horas'];
       $observaciones = $_POST['observaciones'];
-      $archivo_ruta  = $_POST['archivo_ruta'];
       $archivo_nombre= $_POST['archivo_nombre'];
+      $destino = '../archivos/'. $archivo_nombre;
       //ACTUALIZAR ARCHIVO
       $Query ="SELECT * FROM constancias WHERE id = ".$id."";
       $resultado = mysqli_query($conexion,$Query);
@@ -142,7 +142,7 @@
       }
 
 
-      $Query = "UPDATE constancias SET nombre_act = '$nombre_act', fecha_inicio ='$fecha_inicio', fecha_termino ='$fecha_termino', horas='$horas', observaciones ='$observaciones', archivo_ruta = '$archivo_ruta', archivo_nombre = '$archivo_nombre' WHERE id = ".$id;
+      $Query = "UPDATE constancias SET nombre_act = '$nombre_act', fecha_inicio ='$fecha_inicio', fecha_termino ='$fecha_termino', horas='$horas', observaciones ='$observaciones', archivo_ruta = '$destino', archivo_nombre = '$archivo_nombre' WHERE id = ".$id;
       $resultado = mysqli_query($conexion, $Query);
       $numero = mysqli_affected_rows($conexion);
 

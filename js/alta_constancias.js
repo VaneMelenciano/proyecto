@@ -101,8 +101,8 @@ function actionUpdate(){
   var fecha_termino_actualizar = document.getElementById("fecha_termino_actualizar").value;//1982-01-31
   var horas_actualizar = document.getElementById("horas_actualizar").value; 
   var archivo_actualizar = document.getElementById('archivo_actualizar').value; //direccion actual
-  var archivo_nombre_actualizar = document.getElementById('archivo_nombre_actualizar').innerHTML;
-  var observaciones_actualizar = document.getElementById("observaciones_actualizar").value;
+  var archivo_nombre_actualizar = document.getElementById('archivo_nombre_actualizar').innerHTML; //nombre archivo
+  var observaciones_actualizar = document.getElementById("observaciones_actualizar").value; 
   
   $.ajax({
       url: "php/alta_constancias.php",
