@@ -106,6 +106,7 @@ function actionRead(){
                 for(constancia of objetoJSON.constancias){
                 
                   var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ constancia.id+');"><i class="ti-pencil" ></i> Editar </button>';
+                  Botones += ' <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#modalVer"><i class="ti-zoom-in"></i> </button>'; //search-plus
                   Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+constancia.id+');"><i class="ti-trash"></i> Eliminar </button> </p>';
                   var nombre = '<p align="left">';
                   nombre+=constancia.nombre_act;
