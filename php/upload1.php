@@ -1,14 +1,28 @@
 
 <?php
-$directorio = '../archivos/';
-$subir_archivo = $directorio.basename($_FILES['archivo_actualizar']['name']);
-move_uploaded_file($_FILES['archivo_actualizar']['tmp_name'], $subir_archivo);
-header("Location: ../alta-constancias.html");
-/*if (move_uploaded_file($_FILES['archivo']['tmp_name'], $subir_archivo)) {
-      echo "El archivo es válido y se cargó correctamente";
-    } else {
-       echo "La subida ha fallado";
-    }*/
+if(isset($_FILES['archivo_actualizar']['name'])){
 
-    //<form enctype="multipart/form-data" action="php/upload.php" method="POST">-->
+   /* Getting file name */
+   $filename = $_FILES['archivo_actualizar']['name'];
+
+   /* Location */
+   $location = "../archivos/".$filename;
+   $FileType = pathinfo($location,PATHINFO_EXTENSION);
+   $FileType = strtolower($FileType);
+
+   /* Valid extensions */
+   $valid_extensions = array("pdf");
+
+   $response = 0;
+   /* Check file extension */
+   if(in_array(strtolower($FileType), $valid_extensions)) {
+      /* Upload file */
+      if(move_uploaded_file($_FILES['archivo_actualizar']['tmp_name'],$location)){
+         $response = $location;
+      }
+   }
+
+   echo $response;
+   //exit;
+}
 ?>

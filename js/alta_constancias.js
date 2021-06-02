@@ -41,11 +41,14 @@ function actionCreate(){
           if(objetoJSON.estado==1){
             //mostar en la tabla los datos que este regresando
                 //BOTONES
-                var Botones = '<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
-                Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button>';
+                var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1 mr-2" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
+                Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button> </p>';
+                var nombre = '<p align="left">';
+                    nombre+=nombre_act_create;
+                    nombre+='</p>';
                 
                 tabla.row.add( [
-                    nombre_act_create,
+                    nombre,
                     fecha_inicio_create,
                     horas_create,
                     Botones
@@ -55,10 +58,36 @@ function actionCreate(){
           }else{
               //alert(objetoJSON.mensaje);
           }
+          var fd = new FormData();
+                  var files = $('#archivo')[0].files;
+                  
+                  // Check file selected or not
+                  if(files.length > 0 ){
+                    fd.append('archivo',files[0]);
+        
+                    $.ajax({
+                        url: 'php/upload.php',
+                        type: 'post',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+                        success: function(response){
+                          if(response != 0){
+                              $("#archivo").attr("src",response); 
+                              //alert("AQUI: " + response);
+                          }else{
+                              alert('archivo no cargado');
+                          }
+                        },
+                    });
+                  }else{
+                    alert("Por favor, seleccione un archivo.");
+                  }
         }
       });
     limpiarModalNuevo();
 }
+
 function actionRead(){
     $.ajax({
         url: "php/alta_constancias.php",
@@ -76,11 +105,14 @@ function actionRead(){
                 //for
                 for(constancia of objetoJSON.constancias){
                 
-                    var Botones = '<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ constancia.id+');"><i class="ti-pencil" ></i> Editar </button>';
-                    Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+constancia.id+');"><i class="ti-trash"></i> Eliminar </button>';
-                    
+                  var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ constancia.id+');"><i class="ti-pencil" ></i> Editar </button>';
+                  Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+constancia.id+');"><i class="ti-trash"></i> Eliminar </button> </p>';
+                  var nombre = '<p align="left">';
+                  nombre+=constancia.nombre_act;
+                  nombre+='</p>';
+
                     tabla.row.add([
-                        constancia.nombre_act,
+                        nombre,
                         constancia.fecha_inicio,
                         constancia.horas,
                         Botones
@@ -190,11 +222,14 @@ function actualizarRegistro(){ //Función hija de actionUpdate. Se encarga de vo
           var objetoJSON = JSON.parse(resultado);
           var tabla = $('#dataTable').DataTable();
           if(objetoJSON.estado==1){
-            var Botones = '<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
-            Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button>';
-            
+            var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
+            Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button></p>';
+            var nombre = '<p align="left">';
+                    nombre+=objetoJSON.nombre_act;
+                    nombre+='</p>';
+
             tabla.row.add( [
-                objetoJSON.nombre_act,
+                nombre,
                 objetoJSON.fecha_inicio,
                 objetoJSON.horas,
                 Botones
@@ -202,6 +237,31 @@ function actualizarRegistro(){ //Función hija de actionUpdate. Se encarga de vo
             tabla.draw(false);
           }else{
               alert(objetoJSON.mensaje);
+          }
+          //Actualizar archivo
+          var fd = new FormData();
+          var files = $('#archivo_actualizar')[0].files;
+          
+          if(files.length > 0 ){
+            fd.append('archivo_actualizar',files[0]);
+
+            $.ajax({
+                url: 'php/upload1.php',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                  if(response != 0){
+                      $("#archivo_actualizar").attr("src",response); 
+                      //alert("AQUI: " + response);
+                  }else{
+                      alert('archivo no cargado');
+                  }
+                },
+            });
+          }else{
+            alert("Por favor, seleccione un archivo.");
           }
       }
     });
