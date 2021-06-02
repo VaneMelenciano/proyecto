@@ -43,6 +43,7 @@ function actionCreate(){
             //mostar en la tabla los datos que este regresando
                 //BOTONES
                 var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1 mr-2" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
+                Botones += ' <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#modalVer" onclick="identificarVer('+ objetoJSON.id+');"><i class="ti-zoom-in"></i> </button>'; //search-plus
                 Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button> </p>';
                 var nombre = '<p align="left">';
                     nombre+=nombre_act_create;
@@ -107,7 +108,7 @@ function actionRead(){
                 for(constancia of objetoJSON.constancias){
                 
                   var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ constancia.id+');"><i class="ti-pencil" ></i> Editar </button>';
-                  Botones += ' <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#modalVer" onclick="recuperarRegistroVer('+ constancia.id+');"><i class="ti-zoom-in"></i> </button>'; //search-plus
+                  Botones += ' <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#modalVer" onclick="identificarVer('+ constancia.id+');"><i class="ti-zoom-in"></i> </button>'; //search-plus
                   Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+constancia.id+');"><i class="ti-trash"></i> Eliminar </button> </p>';
                   var nombre = '<p align="left">';
                   nombre+=constancia.nombre_act;
@@ -167,6 +168,33 @@ function actionUpdate(){
         }else{
             //alert(objetoJSON.mensaje);
         }
+
+        //Actualizar archivo
+        var fd = new FormData();
+        var files = $('#archivo_actualizar')[0].files;
+
+        if(files.length > 0 ){
+          fd.append('archivo_actualizar',files[0]);
+
+          $.ajax({
+              url: 'php/upload1.php',
+              type: 'post',
+              data: fd,
+              contentType: false,
+              processData: false,
+              success: function(response){
+                if(response != 0){
+                    $("#archivo_actualizar").attr("src",response); 
+                    //alert("AQUI: " + response);
+                }else{
+                    alert('archivo no cargado');
+                }
+              },
+          });
+        }else{
+          alert("Por favor, seleccione un archivo.");
+        }
+        
       }
     });
 }
@@ -241,9 +269,15 @@ function verArchivo(){
           var nombre = '<p align="left">';
                   nombre+=objetoJSON.nombre_act;
                   nombre+='</p>';*/
-          ruta = 'archivos/'+objetoJSON.archivo_ruta+'.pdf#toolbar=0&navpanes=0&scrollbar=0';//objetoJSON.archivo_ruta;
-          document.getElementById("mostrarArchivo").src=ruta;
-          alert(ruta);
+          //ruta = objetoJSON.archivo_ruta+'.pdf#toolbar=0&navpanes=0&scrollbar=0';//objetoJSON.archivo_ruta;
+          var nombre = objetoJSON.archivo_nombre;
+          ruta = 'archivos/'+nombre;
+          var archivo=document.getElementById("mostrarArchivo");
+          var clone=archivo.cloneNode(true);
+          clone.setAttribute('src',ruta);
+          archivo.parentNode.replaceChild(clone,archivo);
+          //alert(ruta);
+
 
         }else{
             alert(objetoJSON.mensaje);
@@ -261,8 +295,9 @@ function identificarActualizar(id){
     //alert("El registro seleccionado actualizar es el siguiete: "+id);
     idSeleccionadoParaActualizar=id;
 }
-function recuperarRegistroVer(id){
+function identificarVer(id){
   idSeleccionadoParaVer=id;
+  verArchivo();
 }
 document.getElementById('archivo').onchange = function () {
   console.log(this.value);
