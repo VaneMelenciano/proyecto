@@ -1,5 +1,6 @@
 var idSeleccionadoParaEliminar = 0;
 var idSeleccionadoParaActualizar = 0;
+var idSeleccionadoParaVer =0;
 
 function limpiarModalNuevo(){
   document.getElementById("nombre_act").value="";
@@ -106,7 +107,7 @@ function actionRead(){
                 for(constancia of objetoJSON.constancias){
                 
                   var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ constancia.id+');"><i class="ti-pencil" ></i> Editar </button>';
-                  Botones += ' <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#modalVer"><i class="ti-zoom-in"></i> </button>'; //search-plus
+                  Botones += ' <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#modalVer" onclick="recuperarRegistroVer('+ constancia.id+');"><i class="ti-zoom-in"></i> </button>'; //search-plus
                   Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+constancia.id+');"><i class="ti-trash"></i> Eliminar </button> </p>';
                   var nombre = '<p align="left">';
                   nombre+=constancia.nombre_act;
@@ -268,6 +269,36 @@ function actualizarRegistro(){ //Función hija de actionUpdate. Se encarga de vo
     });
 }
 
+function verArchivo(){
+  $.ajax({
+    url: "php/alta_constancias.php",
+    method: 'GET',
+    data: {
+        id: idSeleccionadoParaVer,
+        accion: 'read'
+    },
+    success: function( resultado ) {
+        var objetoJSON = JSON.parse(resultado);
+        var ruta = "";
+        //var tabla = $('#dataTable').DataTable();
+        if(objetoJSON.estado==1){
+          /*var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
+          Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button></p>';
+          var nombre = '<p align="left">';
+                  nombre+=objetoJSON.nombre_act;
+                  nombre+='</p>';*/
+          ruta = 'archivos/'+objetoJSON.archivo_ruta+'.pdf#toolbar=0&navpanes=0&scrollbar=0';//objetoJSON.archivo_ruta;
+          document.getElementById("mostrarArchivo").src=ruta;
+          alert(ruta);
+
+        }else{
+            alert(objetoJSON.mensaje);
+        }
+      
+    }
+  });
+}
+
 function identificaEliminar(id){
     //alert("El id del registro a eliminar es "+id);
     idSeleccionadoParaEliminar=id;
@@ -275,6 +306,9 @@ function identificaEliminar(id){
 function identificarActualizar(id){
     //alert("El registro seleccionado actualizar es el siguiete: "+id);
     idSeleccionadoParaActualizar=id;
+}
+function recuperarRegistroVer(id){
+  idSeleccionadoParaVer=id;
 }
 document.getElementById('archivo').onchange = function () {
   console.log(this.value);
