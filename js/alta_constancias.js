@@ -155,7 +155,7 @@ function actionUpdate(){
       success: function( respuesta ) {
         var objetoJSON  = JSON.parse(respuesta);
         if(objetoJSON.estado == 1){
-            alert(objetoJSON.mensaje);
+            //alert(objetoJSON.mensaje);
             $('#modalEditar').modal('hide');
 
             var tabla = $('#dataTable').DataTable();
@@ -165,7 +165,7 @@ function actionUpdate(){
             renglon[2] = horas_actualizar;
             tabla.row("#row_"+idSeleccionadoParaActualizar).data(renglon);
         }else{
-            alert(objetoJSON.mensaje);
+            //alert(objetoJSON.mensaje);
         }
       }
     });
