@@ -154,7 +154,8 @@
           $respuesta["estado"] = 0;
           $respuesta["mensaje"] = "El registro no se ha podido actualizar";
       }
-      echo($Query);
+      echo json_encode($respuesta);
+      mysqli_close($conexion);
     }
 
     function accionEliminar($conexion){

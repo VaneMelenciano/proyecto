@@ -153,9 +153,20 @@ function actionUpdate(){
           accion: 'Actualizar'
       },
       success: function( respuesta ) {
-          //alert(respuesta);
-          tabla.row("#row_"+idSeleccionadoParaActualizar).remove().draw();
-          actualizarRegistro();
+        var objetoJSON  = JSON.parse(respuesta);
+        if(objetoJSON.estado == 1){
+            alert(objetoJSON.mensaje);
+            $('#modalEditar').modal('hide');
+
+            var tabla = $('#dataTable').DataTable();
+            var renglon = tabla.row("#row_"+idSeleccionadoParaActualizar).data();
+            renglon[0] = nombre_act_actualizar;
+            renglon[1] = fecha_inicio_actualizar;
+            renglon[2] = horas_actualizar;
+            tabla.row("#row_"+idSeleccionadoParaActualizar).data(renglon);
+        }else{
+            alert(objetoJSON.mensaje);
+        }
       }
     });
 }
@@ -208,63 +219,6 @@ function recuperarRegistroActualizar(id){
               //alert(objetoJSON.mensaje);
           }
           //alert(resultado);
-      }
-    });
-}
-
-function actualizarRegistro(){ //Función hija de actionUpdate. Se encarga de volver a agregar el renglón actualizado.
-  $.ajax({
-      url: "php/alta_constancias.php",
-      method: 'GET',
-      data: {
-          id: idSeleccionadoParaActualizar,
-          accion: 'read'
-      },
-      success: function( resultado ) {
-          var objetoJSON = JSON.parse(resultado);
-          var tabla = $('#dataTable').DataTable();
-          if(objetoJSON.estado==1){
-            var Botones = '<p align="left"> <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalEditar" onclick="recuperarRegistroActualizar('+ objetoJSON.id+');" href="#" ><i class="ti-pencil"></i> Editar </button>';
-            Botones += ' <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#modalEliminar" onclick="identificaEliminar('+objetoJSON.id+');"><i class="ti-trash"></i> Eliminar </button></p>';
-            var nombre = '<p align="left">';
-                    nombre+=objetoJSON.nombre_act;
-                    nombre+='</p>';
-
-            tabla.row.add( [
-                nombre,
-                objetoJSON.fecha_inicio,
-                objetoJSON.horas,
-                Botones
-            ] ).node().id = 'row_'+objetoJSON.id;
-            tabla.draw(false);
-          }else{
-              alert(objetoJSON.mensaje);
-          }
-          //Actualizar archivo
-          var fd = new FormData();
-          var files = $('#archivo_actualizar')[0].files;
-          
-          if(files.length > 0 ){
-            fd.append('archivo_actualizar',files[0]);
-
-            $.ajax({
-                url: 'php/upload1.php',
-                type: 'post',
-                data: fd,
-                contentType: false,
-                processData: false,
-                success: function(response){
-                  if(response != 0){
-                      $("#archivo_actualizar").attr("src",response); 
-                      //alert("AQUI: " + response);
-                  }else{
-                      alert('archivo no cargado');
-                  }
-                },
-            });
-          }else{
-            alert("Por favor, seleccione un archivo.");
-          }
       }
     });
 }
