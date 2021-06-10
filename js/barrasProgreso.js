@@ -40,13 +40,13 @@ function leerTablas(){
             if(objetoJSON.estado == 1){
                 for(denominacion of objetoJSON.denominaciones){
                     if(denominacion.eje_tematico === "Inquietudes vocacionales propias"){
-                        tabla_ivp.innerHTML += '<tr><th scope="row">'+denominacion.modalidad+'</th><td align="left"><ol type="a"><li>'+denominacion.ejemplos+'</li></ol></td><td>'+denominacion.descripcion+'</td></tr>';
+                        tabla_ivp.innerHTML += '<tr><th scope="row">'+denominacion.modalidad+'</th><td align="left"><ol type="a">'+denominacion.ejemplos+'</ol></td><td>'+denominacion.descripcion+'</td></tr>';
                     }
                     else if(denominacion.eje_tematico == "Énfasis en la profesión"){
-                        tabla_ep.innerHTML += '<tr><th scope="row">'+denominacion.modalidad+'</th><td align="left"><ol type="a"><li>'+denominacion.ejemplos+'</li></ol></td><td>'+denominacion.descripcion+'</td></tr>';
+                        tabla_ep.innerHTML += '<tr><th scope="row">'+denominacion.modalidad+'</th><td align="left"><ol type="a">'+denominacion.ejemplos+'</ol></td><td>'+denominacion.descripcion+'</td></tr>';
                     }
                     else if(denominacion.eje_tematico == "Complementarias a la formación"){
-                        tabla_cf.innerHTML += '<tr><th scope="row">'+denominacion.modalidad+'</th><td align="left"><ol type="a"><li>'+denominacion.ejemplos+'</li></ol></td><td>'+denominacion.descripcion+'</td></tr>';
+                        tabla_cf.innerHTML += '<tr><th scope="row">'+denominacion.modalidad+'</th><td align="left"><ol type="a">'+denominacion.ejemplos+'</ol></td><td>'+denominacion.descripcion+'</td></tr>';
                     }
                 }
             } else alert(objetoJSON.mensaje);
