@@ -1,5 +1,5 @@
 function progreso(){
-    //Esta funcion ocurre cada que se caraga la página "deshboard.html"
+    //Esta funcion ocurre cada que se carga la página "dashboard.html"
     /*
     Lo que se debe hacer es mandar a las barras de progreso (con id: electiva1, electiva2, electiva 3. En el html linea 140)
     el porcentaje de lo que lleva acumulado.
@@ -20,6 +20,27 @@ function progreso(){
     Para la conexion a la base de datos usen el php que ya tenemos hecho, obvio deben hacer otro php para las consultas
     a la tabla electiva
     */
-   
-    alert("progreso");
+
+    var lugar_barras = document.getElementById("barras_progreso");
+    
+    $.ajax({
+        url: "php/barrasProgreso.php",
+        method:'GET',
+        data: {
+        },
+        success: function( respuesta ) {
+            var objetoJSON = JSON.parse(respuesta);
+            if(objetoJSON.estado == 1){
+                var contador_color = 0;
+                var colores = ["bg-success", "bg-warning", "bg-danger"];
+                for(electiva of objetoJSON.electivas){
+                    var porcentaje_electiva = electiva.creditos_acumulados*(100/electiva.creditos);
+                    var barra = '<div> <p>'+electiva.nombre+'</p></div> <div class="progress"> <div id="barra_'+electiva.id+'" class="progress-bar progress-bar-striped '+colores[contador_color]+' progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: '+porcentaje_electiva+'%"> '+parseInt(porcentaje_electiva)+'%</div> </div><br>';
+                    lugar_barras.innerHTML += barra;
+                    contador_color++;
+                }
+            }
+            alert(objetoJSON.mensaje);
+        }
+      });
 }
