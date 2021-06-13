@@ -11,6 +11,9 @@
         case 'leerTablas':
             leerTablas($conexion);
             break;
+        case 'Desglose':
+            desgloseCreditos($conexion);
+            break;
         default:
             break;
     }
@@ -70,6 +73,43 @@
         }else{
             $respuesta["estado"] = 0;
             $respuesta["mensaje"] = "No se encontraron registros";
+        }
+        echo json_encode($respuesta);
+        mysqli_close($conexion);
+    }
+    function desgloseCreditos($conexion){
+        $respuesta = array();
+        $Query =" SELECT e.nombre electiva, c.nombre_act constancia_nombre, d.eje_tematico, d.modalidad, c.horas, ROUND(ce.creditos *d.factor, 2) horas_usadas, d.factor, ce.creditos  FROM alumno a, constancias c, denominacion d, constancia_electiva ce, electiva e  WHERE a.id=c.alumno_id AND d.id=c.denominacion_id AND ce.constancia_id=c.id AND ce.electiva_id=e.id ";
+        
+        $resultado = mysqli_query($conexion, $Query);
+        $num_resultados = mysqli_num_rows($resultado);
+        //
+        
+        if($num_resultados>0){
+            $respuesta['estado']=1;
+            $respuesta['mensaje']="Constancias encontradas";
+            $respuesta["constancias"] = array();
+           while($row = mysqli_fetch_array($resultado)){
+                $rowConstancia = array();
+                if($row["electiva"]=='Electiva 1'){
+                    $rowConstancia["electiva"]=1;
+                }else if($row["electiva"]=='Electiva 2'){
+                    $rowConstancia["electiva"]=2;
+                }else if($row["electiva"]=='Electiva 3'){
+                    $rowConstancia["electiva"]=3;
+                }
+                $rowConstancia["constancia_nombre"] = $row["constancia_nombre"];
+                $rowConstancia["eje_tematico"] = $row["eje_tematico"];
+                $rowConstancia["modalidad"] = $row["modalidad"];
+                $rowConstancia["horas"] = $row["horas"];
+                $rowConstancia["factor"] = $row["factor"];
+                $rowConstancia["horas_usadas"]= $row["horas_usadas"];
+                $rowConstancia["creditos"]= $row["creditos"];
+                array_push($respuesta["constancias"], $rowConstancia);
+            }
+        }else{
+            $respuesta['estado']=0;
+            $respuesta['mensaje']="No exiten constancias";
         }
         echo json_encode($respuesta);
         mysqli_close($conexion);
