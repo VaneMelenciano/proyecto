@@ -79,7 +79,7 @@
     }
     function desgloseCreditos($conexion){
         $respuesta = array();
-        $Query =" SELECT e.nombre electiva, c.nombre_act constancia_nombre, d.eje_tematico, d.modalidad, c.horas, ROUND(ce.creditos *d.factor, 2) horas_usadas, d.factor, ce.creditos  FROM alumno a, constancias c, denominacion d, constancia_electiva ce, electiva e  WHERE a.id=c.alumno_id AND d.id=c.denominacion_id AND ce.constancia_id=c.id AND ce.electiva_id=e.id ";
+        $Query =" SELECT e.nombre electiva, c.id, c.nombre_act constancia_nombre, d.eje_tematico, d.modalidad, c.horas, ROUND(ce.creditos *d.factor, 2) horas_usadas, d.factor, ce.creditos  FROM alumno a, constancias c, denominacion d, constancia_electiva ce, electiva e  WHERE a.id=c.alumno_id AND d.id=c.denominacion_id AND ce.constancia_id=c.id AND ce.electiva_id=e.id ";
         
         $resultado = mysqli_query($conexion, $Query);
         $num_resultados = mysqli_num_rows($resultado);
@@ -98,6 +98,7 @@
                 }else if($row["electiva"]=='Electiva 3'){
                     $rowConstancia["electiva"]=3;
                 }
+                $rowConstancia["id"] = $row["id"];
                 $rowConstancia["constancia_nombre"] = $row["constancia_nombre"];
                 $rowConstancia["eje_tematico"] = $row["eje_tematico"];
                 $rowConstancia["modalidad"] = $row["modalidad"];
