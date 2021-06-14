@@ -12,7 +12,7 @@ function leerTablas(){
             var objetoJSON = JSON.parse(respuesta);
 
             if(objetoJSON.estado==1){
-                alert(objetoJSON.mensaje);
+                //alert(objetoJSON.mensaje);
                 var tabla1 = document.getElementById("electivas_1");
                 var tabla2 = document.getElementById("electivas_2");
                 var tabla3 = document.getElementById("electivas_3");
